@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         ORG = 'cb-kubecd'
-        APP_NAME = 'jx-demo'
+        APP_NAME = 'jx-demo-vlatombe'
         CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
         MAVEN_OPTS = '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn'
     }
@@ -44,7 +44,7 @@ pipeline {
             }
             steps {
                 sh 'jx step pre extend'
-                git 'https://github.com/cb-kubecd/jx-demo.git'
+                git 'https://github.com/cb-kubecd/jx-demo-vlatombe.git'
 
                 sh "git config --global credential.helper store"
                 sh "jx step validate --min-jx-version 1.1.73"
@@ -53,7 +53,7 @@ pipeline {
                 sh "echo \$(jx-release-version) > VERSION"
                 sh "mvn versions:set -DnewVersion=\$(cat VERSION)"
 
-                dir('./charts/jx-demo') {
+                dir('./charts/jx-demo-vlatombe') {
                     sh "make tag"
                 }
 
@@ -70,7 +70,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                dir('./charts/jx-demo') {
+                dir('./charts/jx-demo-vlatombe') {
                     sh 'jx step changelog --version v\$(cat ../../VERSION)'
                     // release the helm chart
                     sh 'make release'

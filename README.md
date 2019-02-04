@@ -1,4 +1,4 @@
-# jx-demo
+# jx-demo-vlatombe
 
 A sample project for the cd-process cluster
 
