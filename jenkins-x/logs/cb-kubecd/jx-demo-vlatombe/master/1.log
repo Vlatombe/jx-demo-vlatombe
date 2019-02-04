@@ -1,0 +1,370 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1549292871.0809956,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1549292871.081372,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1549292872.728437,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1549292873.9450414,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/cb-kubecd/jx-demo-vlatombe.git\" @ \"master\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  13.792 [id=44]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] sh
++ jx step pre extend
+Extension jx.spotbugs-maven applied but cannot be found in this Jenkins X installation. Available extensions are []
+Extension jx.jacoco-maven applied but cannot be found in this Jenkins X installation. Available extensions are []
+[Pipeline] git
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/cb-kubecd/jx-demo.git # timeout=10
+Fetching upstream changes from https://github.com/cb-kubecd/jx-demo.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/cb-kubecd/jx-demo.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 3cedff6784757eb2c3d28c6455cfb5f014106557 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 3cedff6784757eb2c3d28c6455cfb5f014106557
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master 3cedff6784757eb2c3d28c6455cfb5f014106557
+Commit message: "Merge pull request #23 from cb-kubecd/delete-cloudbees/policy-engine-test-0ggpem2a3fi5hhic"
+First time build. Skipping changelog.
+[Pipeline] sh
++ git config --global credential.helper store
+[Pipeline] sh
++ jx step validate --min-jx-version 1.1.73
+[Pipeline] sh
++ jx step git credentials
+Generated Git credentials file /home/jenkins/git/credentials
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.20
+[Pipeline] sh
++ cat VERSION
++ mvn versions:set -DnewVersion=0.0.20
+Picked up _JAVA_OPTIONS: -Xmx400m
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective settings
+[WARNING] 'servers.server.id' must be unique but found duplicate server with id nexus @ /root/.m2/settings.xml
+[WARNING] 
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.cloudbees.compliance:jx-demo >------------------
+[INFO] Building demo 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- versions-maven-plugin:2.7:set (default-cli) @ jx-demo ---
+[INFO] Searching for local aggregator root...
+[INFO] Local aggregation root: /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job
+[INFO] Processing change of com.cloudbees.compliance:jx-demo:0.0.1-SNAPSHOT -> 0.0.20
+[INFO] Processing com.cloudbees.compliance:jx-demo
+[INFO]     Updating project com.cloudbees.compliance:jx-demo
+[INFO]         from version 0.0.1-SNAPSHOT to 0.0.20
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 20.374 s
+[INFO] Finished at: 2019-02-04T15:09:40Z
+[INFO] ------------------------------------------------------------------------
+[Pipeline] dir
+Running in /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/charts/jx-demo
+[Pipeline] {
+[Pipeline] sh
++ make tag
+sed -i -e "s/version:.*/version: 0.0.20/" Chart.yaml
+sed -i -e "s|repository: .*|repository: 10.6.12.137:5000/cb-kubecd/jx-demo|" values.yaml
+sed -i -e "s/tag: .*/tag: 0.0.20/" values.yaml
+git add --all
+git commit -m "release 0.0.20" --allow-empty # if first release then no verion update is performed
+[master 80dee1a] release 0.0.20
+ 7 files changed, 80 insertions(+), 4 deletions(-)
+ create mode 100644 VERSION
+ create mode 100644 charts/jx-demo@tmp/durable-03bf22dd/jenkins-log.txt
+ create mode 100644 charts/jx-demo@tmp/durable-03bf22dd/script.sh
+ create mode 100644 pom.xml.versionsBackup
+git tag -fa v0.0.20 -m "Release version 0.0.20"
+git push origin v0.0.20
+To https://github.com/cb-kubecd/jx-demo.git
+ * [new tag]         v0.0.20 -> v0.0.20
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] sh
++ mvn clean deploy
+Picked up _JAVA_OPTIONS: -Xmx400m
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective settings
+[WARNING] 'servers.server.id' must be unique but found duplicate server with id nexus @ /root/.m2/settings.xml
+[WARNING] 
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.cloudbees.compliance:jx-demo >------------------
+[INFO] Building demo 0.0.20
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.1.0:clean (default-clean) @ jx-demo ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ jx-demo ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ jx-demo ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ jx-demo ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ jx-demo ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M1:test (default-test) @ jx-demo ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.cloudbees.compliance.demo.DemoApplicationTests
+15:09:57.559 [main] DEBUG org.springframework.test.context.junit4.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.565 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+15:09:57.575 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+15:09:57.595 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.cloudbees.compliance.demo.DemoApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+15:09:57.608 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.cloudbees.compliance.demo.DemoApplicationTests], using SpringBootContextLoader
+15:09:57.612 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.cloudbees.compliance.demo.DemoApplicationTests]: class path resource [com/cloudbees/compliance/demo/DemoApplicationTests-context.xml] does not exist
+15:09:57.612 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.cloudbees.compliance.demo.DemoApplicationTests]: class path resource [com/cloudbees/compliance/demo/DemoApplicationTestsContext.groovy] does not exist
+15:09:57.612 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.cloudbees.compliance.demo.DemoApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+15:09:57.613 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cloudbees.compliance.demo.DemoApplicationTests]: DemoApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:09:57.653 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.729 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/target/classes/com/cloudbees/compliance/demo/DemoApplication.class]
+15:09:57.731 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cloudbees.compliance.demo.DemoApplication for test class com.cloudbees.compliance.demo.DemoApplicationTests
+15:09:57.832 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.cloudbees.compliance.demo.DemoApplicationTests]: using defaults.
+15:09:57.833 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+15:09:57.845 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.transaction.TransactionalTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/TransactionDefinition]
+15:09:57.845 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/interceptor/TransactionAttribute]
+15:09:57.845 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1a482e36, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@72967906, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@5b8dfcc1, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@2f9f7dcf, org.springframework.test.context.support.DirtiesContextTestExecutionListener@747ddf94, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@35e2d654, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@1bd4fdd, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@55183b20, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@4f83df68, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@6cf0e0ba]
+15:09:57.848 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.848 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.850 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.850 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.850 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.850 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.854 [main] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@4d5d943d testClass = DemoApplicationTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@368f2016 testClass = DemoApplicationTests, locations = '{}', classes = '{class com.cloudbees.compliance.demo.DemoApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@cb0ed20, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@28ac3dc3, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@544a2ea6, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@77846d2c], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+15:09:57.855 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.855 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.cloudbees.compliance.demo.DemoApplicationTests]
+15:09:57.876 [main] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.0.RELEASE)
+
+2019-02-04 15:09:58.294  INFO 466 --- [           main] c.c.c.demo.DemoApplicationTests          : Starting DemoApplicationTests on a17c1652-288e-11e9-a437-ac87a32e6a07-pod-717d62 with PID 466 (started by root in /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job)
+2019-02-04 15:09:58.296  INFO 466 --- [           main] c.c.c.demo.DemoApplicationTests          : No active profile set, falling back to default profiles: default
+2019-02-04 15:10:00.867  INFO 466 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-02-04 15:10:02.108  INFO 466 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-04 15:10:02.194  INFO 466 --- [           main] c.c.c.demo.DemoApplicationTests          : Started DemoApplicationTests in 4.308 seconds (JVM running for 5.063)
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.041 s - in com.cloudbees.compliance.demo.DemoApplicationTests
+2019-02-04 15:10:02.472  INFO 466 --- [       Thread-4] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- maven-jar-plugin:3.1.0:jar (default-jar) @ jx-demo ---
+[INFO] Building jar: /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/target/jx-demo-0.0.20.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.1.0.RELEASE:repackage (repackage) @ jx-demo ---
+[INFO] Replacing main artifact /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/target/jx-demo-0.0.20.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ jx-demo ---
+[INFO] Installing /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/target/jx-demo-0.0.20.jar to /root/.mvnrepository/com/cloudbees/compliance/jx-demo/0.0.20/jx-demo-0.0.20.jar
+[INFO] Installing /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/pom.xml to /root/.mvnrepository/com/cloudbees/compliance/jx-demo/0.0.20/jx-demo-0.0.20.pom
+[INFO] 
+[INFO] --- maven-deploy-plugin:2.8.2:deploy (default-deploy) @ jx-demo ---
+[INFO] Using alternate deployment repository nexus::default::http://nexus/repository/maven-releases/
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 22.261 s
+[INFO] Finished at: 2019-02-04T15:10:08Z
+[INFO] ------------------------------------------------------------------------
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.20
++ skaffold build -f skaffold.yaml
+time="2019-02-04T15:10:08Z" level=warning msg="config version (skaffold/v1alpha2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  528.9kBSending build context to Docker daemon  18.13MB
+Step 1/8 : FROM openjdk:8-jdk-slim
+8-jdk-slim: Pulling from library/openjdk
+5e6ec7f28fb7: Pulling fs layer
+1cf4e4a3f534: Pulling fs layer
+a553b6e4e3b5: Pulling fs layer
+34bf810d9d8c: Pulling fs layer
+2ccb1f55bcc0: Pulling fs layer
+34bf810d9d8c: Waiting
+2ccb1f55bcc0: Waiting
+a553b6e4e3b5: Verifying Checksum
+a553b6e4e3b5: Download complete
+34bf810d9d8c: Verifying Checksum
+34bf810d9d8c: Download complete
+5e6ec7f28fb7: Verifying Checksum
+2ccb1f55bcc0: Verifying Checksum
+2ccb1f55bcc0: Download complete
+1cf4e4a3f534: Download complete
+5e6ec7f28fb7: Pull complete
+1cf4e4a3f534: Pull complete
+a553b6e4e3b5: Pull complete
+34bf810d9d8c: Pull complete
+2ccb1f55bcc0: Pull complete
+Digest: sha256:5f55972b15dbd3a80c77b3aa57cc46aded9cfffc58a1290a36d420d5f7e212f0
+Status: Downloaded newer image for openjdk:8-jdk-slim
+ ---> 05e8bb976cfc
+Step 2/8 : ENV PORT 8080
+ ---> Running in 95cd733eeeb9
+ ---> a37a240392ac
+Step 3/8 : ENV CLASSPATH /opt/lib
+ ---> Running in a4858b13e4a4
+ ---> 37faa4eebb15
+Step 4/8 : EXPOSE 8080
+ ---> Running in 6a8a8b64376d
+ ---> 9f67d009ffe4
+Step 5/8 : COPY pom.xml target/lib* /opt/lib/
+ ---> dd336376d752
+Step 6/8 : COPY target/*.jar /opt/app.jar
+ ---> ea84947000cd
+Step 7/8 : WORKDIR /opt
+ ---> 82524d379a7c
+Step 8/8 : CMD java -jar app.jar
+ ---> Running in 362b4b354bce
+ ---> 057283143a74
+Successfully built 057283143a74
+The push refers to a repository [10.6.12.137:5000/cb-kubecd/jx-demo]
+a75d41fd4c26: Preparing
+58f4c93b35a1: Preparing
+eeed07504e43: Preparing
+ead41462a737: Preparing
+cd98f695aaac: Preparing
+388282b71f87: Preparing
+3c816b4ead84: Preparing
+388282b71f87: Waiting
+3c816b4ead84: Waiting
+cd98f695aaac: Pushed
+58f4c93b35a1: Pushed
+ead41462a737: Pushed
+388282b71f87: Pushed
+a75d41fd4c26: Pushed
+3c816b4ead84: Pushed
+eeed07504e43: Pushed
+0.0.20: digest: sha256:21571fae442e561b2f771f970ea891a6012015aa2f63f5b23ea39e4a091a1bd5 size: 1784
+Build complete in 24.365746888s
+Starting test...
+Test complete in 5.178µs
+changeme -> 10.6.12.137:5000/cb-kubecd/jx-demo:0.0.20
+There is a new version (0.22.0) of skaffold available. Download it at https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 10.6.12.137:5000/cb-kubecd/jx-demo:0.0.20
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/charts/jx-demo
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.20
+Using batch mode as inside a pipeline
+Converted /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/charts/jx-demo to an unshallow repository
+Generating change log from git ref 3cedff6784757eb2c3d28c6455cfb5f014106557 => 80dee1abefbc92d04ef48d70e8a6c4a894f21086
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for cb-kubecd/jx-demo and tag v0.0.20 so creating a new release
+Updated the release information at https://github.com/cb-kubecd/jx-demo/releases/tag/v0.0.20
+generated: /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/charts/jx-demo/templates/release.yaml
+Created Release jx-demo-0-0-20 resource in namespace jx
+Updating PipelineActivity cb-kubecd-jx-demo-vlatombe-master-1 with version 0.0.20
+Updated PipelineActivities cb-kubecd-jx-demo-vlatombe-master-1 with release notes URL: https://github.com/cb-kubecd/jx-demo/releases/tag/v0.0.20
+[Pipeline] sh
++ make release
+rm -rf charts
+rm -rf jx-demo*.tgz
+helm dependency build
+No requirements found in ./charts.
+helm lint
+==> Linting .
+Lint OK
+
+1 chart(s) linted, no failures
+helm init --client-only
+Creating /builder/home/.helm 
+Creating /builder/home/.helm/repository 
+Creating /builder/home/.helm/repository/cache 
+Creating /builder/home/.helm/repository/local 
+Creating /builder/home/.helm/plugins 
+Creating /builder/home/.helm/starters 
+Creating /builder/home/.helm/cache/archive 
+Creating /builder/home/.helm/repository/repositories.yaml 
+Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com 
+Adding local repo with URL: http://127.0.0.1:8879/charts 
+$HELM_HOME has been configured at /builder/home/.helm.
+Not installing Tiller due to 'client-only' flag having been set
+Happy Helming!
+helm package .
+Successfully packaged chart and saved it to: /tmp/jenkinsTests.tmp/jenkins1570418787815917648test/workspace/job/charts/jx-demo/jx-demo-0.0.20.tgz
+curl --fail -u **** --data-binary "@jx-demo-0.0.20.tgz" http://jenkins-x-chartmuseum:8080/api/charts
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  3236  100    14  100  3222    371  85421 --:--:-- --:--:-- --:--:-- 87081
+{"saved":true}rm -rf jx-demo*.tgz%
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
++ jx step post run
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
